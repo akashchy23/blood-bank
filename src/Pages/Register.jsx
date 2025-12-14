@@ -31,17 +31,31 @@ const Register = () => {
 
             }
         })
+       const mainPhotoUrl = res.data.data.display_url;
+        const formData = {
+            email,
+            password,
+            fullName,
+            mainPhotoUrl
 
+        }
 
         if (res.data.success == true) {
             registerWithEmailPassword(email, password)
                 .then((userCredential) => {
                     updateProfile(auth.currentUser, {
                         displayName: fullName,
-                        photoURL: res.data.data.display_url,
+                        photoURL: mainPhotoUrl,
                     })
                         .then(() => {
                             setUser(userCredential.user);
+                            axios.post("http://localhost:3000/users",formData)
+                             .then(res=>{
+                                console.log(res.data)
+                             })
+                             .catch(err=>{
+                                console.log(err)
+                             })
                             navigate("/");
                         })
                         .catch((error) => console.log(error));
