@@ -3,6 +3,9 @@ import Rootlayout from "../rootlayout/Rootlayout";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import DashboardLayout from "../DashboardLayout/DashboardLayout";
+import Maindashboard from "../Pages/Dashboard/Maindashboard";
+import AddProduct from "../Pages/Dashboard/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,20 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path:'/dashboard',
+   element:<DashboardLayout></DashboardLayout>,
+   children:[
+    {
+      path:'maindashboard',
+      element:<Maindashboard></Maindashboard>
+    },
+    {
+      path:'add-product',
+      element:<AddProduct></AddProduct>
+    }
+   ]
+  }
 ]);
 
 export default router;

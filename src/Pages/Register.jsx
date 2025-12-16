@@ -18,6 +18,9 @@ const Register = () => {
         const fullName = e.target.fullName.value;
         const photoURL = e.target.photoURL;
         const file = photoURL.files[0];
+        const role = e.target.role.value
+       
+      
         const uppercase = /[A-Z]/;
         const lowercase = /[a-z]/;
 
@@ -31,12 +34,13 @@ const Register = () => {
 
             }
         })
-       const mainPhotoUrl = res.data.data.display_url;
+        const mainPhotoUrl = res.data.data.display_url;
         const formData = {
             email,
             password,
             fullName,
-            mainPhotoUrl
+            mainPhotoUrl,
+            role
 
         }
 
@@ -49,13 +53,13 @@ const Register = () => {
                     })
                         .then(() => {
                             setUser(userCredential.user);
-                            axios.post("http://localhost:3000/users",formData)
-                             .then(res=>{
-                                console.log(res.data)
-                             })
-                             .catch(err=>{
-                                console.log(err)
-                             })
+                            axios.post("http://localhost:3000/users", formData)
+                                .then(res => {
+                                    console.log(res.data)
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                })
                             navigate("/");
                         })
                         .catch((error) => console.log(error));
@@ -115,6 +119,13 @@ const Register = () => {
                             className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
                         />
                     </div>
+                     <label className="font-medium text-gray-800 dark:text-gray-200">Choose Role</label>
+                    <select name="role" defaultValue="Choose a Role" className="select">
+                        <option disabled={true}>Choose a Role</option>
+                        <option value='manager'>Manager</option>
+                        <option value='buyer'>Buyer</option>
+                        
+                    </select>
 
                     {/* Password */}
                     <div>
