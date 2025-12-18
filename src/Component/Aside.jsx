@@ -1,16 +1,25 @@
 // Aside.jsx
-
-import { Home, Users, Settings } from "lucide-react";
-import { NavLink } from "react-router";
+import { Home, Users, Settings, LogOut } from "lucide-react";
+import { NavLink, useNavigate } from "react-router";
 
 const Aside = () => {
-  return (
-    <aside className="h-screen w-64 bg-gradient-to-b from-slate-900 to-slate-800 text-white p-5">
-      {/* Logo / Title */}
-      <h1 className="text-2xl font-bold mb-10">AdminPanel</h1>
+  const navigate = useNavigate();
 
-      {/* Navigation */}
-      <nav className="space-y-3">
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  return (
+    <aside className="fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-slate-900 to-slate-800 text-white flex flex-col overflow-hidden">
+      
+      {/* Top Section */}
+      <div className="p-5">
+        <h1 className="text-2xl font-bold mb-10">AdminPanel</h1>
+      </div>
+
+      {/* Navigation (scrolls if long) */}
+      <nav className="flex-1 px-5 space-y-3 overflow-y-auto">
         <NavLink
           to="/dashboard/maindashboard"
           className={({ isActive }) =>
@@ -21,15 +30,27 @@ const Aside = () => {
           <Home className="h-5 w-5" />
           Dashboard
         </NavLink>
+
         <NavLink
-          to="/dashboard/add-product"
+          to="/dashboard/add-request"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-lg transition
             ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
           }
         >
           <Home className="h-5 w-5" />
-          Add Product
+          Add Request
+        </NavLink>
+
+        <NavLink
+          to="/dashboard/manage-product"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg transition
+            ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
+          }
+        >
+          <Home className="h-5 w-5" />
+          Manage Product
         </NavLink>
 
         <NavLink
@@ -54,6 +75,18 @@ const Aside = () => {
           Settings
         </NavLink>
       </nav>
+
+      {/* Logout (always bottom, never moves) */}
+      <div className="p-5 border-t border-slate-700">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-600 transition"
+        >
+          <LogOut className="h-5 w-5" />
+          Logout
+        </button>
+      </div>
+
     </aside>
   );
 };

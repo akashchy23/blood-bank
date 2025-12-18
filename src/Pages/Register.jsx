@@ -1,5 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { updateProfile } from "firebase/auth";
@@ -7,6 +7,16 @@ import { auth } from "../firebase/firebase.config";
 import axios from "axios";
 
 const Register = () => {
+    const [upazilas, setUpazilas] = useState([])
+    const [districts, setDistricts] = useState([])
+
+    useEffect(() => {
+        axios.get('./upazila.json')
+            .then(res => setUpazilas(res.data.upazilas))
+
+        axios.get('./district.json')
+            .then(res => (setDistricts(res.data.districts)))
+    }, [])
     const navigate = useNavigate();
     const { registerWithEmailPassword, setUser, user, handleGoogleSignIn } =
         useContext(AuthContext);
@@ -18,9 +28,11 @@ const Register = () => {
         const fullName = e.target.fullName.value;
         const photoURL = e.target.photoURL;
         const file = photoURL.files[0];
-        const role = e.target.role.value
-       
-      
+        const blood = e.target.blood.value
+        const district = e.target.district.value
+        const upazila = e.target.upazila.value
+
+
         const uppercase = /[A-Z]/;
         const lowercase = /[a-z]/;
 
@@ -40,9 +52,12 @@ const Register = () => {
             password,
             fullName,
             mainPhotoUrl,
-            role
+            blood,
+            district,
+            upazila
 
         }
+        console.log(formData)
 
         if (res.data.success == true) {
             registerWithEmailPassword(email, password)
@@ -119,12 +134,32 @@ const Register = () => {
                             className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
                         />
                     </div>
-                     <label className="font-medium text-gray-800 dark:text-gray-200">Choose Role</label>
-                    <select name="role" defaultValue="Choose a Role" className="select">
-                        <option disabled={true}>Choose a Role</option>
-                        <option value='manager'>Manager</option>
-                        <option value='buyer'>Buyer</option>
-                        
+                    <label className="font-medium text-gray-800 dark:text-gray-200">Choose Role</label>
+                    <select name="blood" defaultValue="Choose Blood Group" className="select">
+                        <option disabled={true}>Choose Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+
+                    </select>
+                    {/* for district */}
+                    <select name="district" defaultValue="Select your district" className="select">
+                        <option disabled={true}>Select your district</option>
+                        {
+                            districts.map(d => <option value={d.name} key={ d.id}>{d.name}</option>)
+                        }
+                    </select>
+                    {/* for upazila */}
+                    <select name="upazila" defaultValue="Select your Upazila" className="select">
+                        <option disabled={true}>Select your Upazila</option>
+                        {
+                            upazilas.map(u => <option value={u.name} key={u.id}>{u.name}</option>)
+                        }
                     </select>
 
                     {/* Password */}
