@@ -1,18 +1,20 @@
 // Aside.jsx
 import { Home, Users, Settings, LogOut } from "lucide-react";
-import { NavLink, useNavigate } from "react-router";
+import { use } from "react";
+import { NavLink } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Aside = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+  
+  const { role ,logout} = use(AuthContext)
+   const handleLogout=()=>{
+        logout()
+         .then(res=>console.log(res))
+    }
 
   return (
     <aside className="fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-slate-900 to-slate-800 text-white flex flex-col overflow-hidden">
-      
+
       {/* Top Section */}
       <div className="p-5">
         <h1 className="text-2xl font-bold mb-10">AdminPanel</h1>
@@ -31,16 +33,33 @@ const Aside = () => {
           Dashboard
         </NavLink>
 
-        <NavLink
-          to="/dashboard/add-request"
+        {
+          role == 'donor' && (<NavLink
+            to="/dashboard/add-request"
+            className={({ isActive }) =>
+              `flex items-center gap-3 p-3 rounded-lg transition
+            ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
+            }
+          >
+            <Home className="h-5 w-5" />
+            Add Request
+          </NavLink>)
+        }
+
+        {
+          role == 'admin' && (
+            <NavLink
+          to="/dashboard/all-users"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-lg transition
             ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
           }
         >
           <Home className="h-5 w-5" />
-          Add Request
+          All Users
         </NavLink>
+          )
+        }
 
         <NavLink
           to="/dashboard/manage-product"

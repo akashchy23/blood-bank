@@ -7,6 +7,8 @@ import DashboardLayout from "../DashboardLayout/DashboardLayout";
 import Maindashboard from "../Pages/Dashboard/Maindashboard";
 import ManageProduct from "../Pages/Dashboard/ManageProduct";
 import AddRequest from "../Pages/Dashboard/AddRequest";
+import Allusers from "../Pages/Dashboard/Allusers";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/dashboard',
-   element:<DashboardLayout></DashboardLayout>,
+   element:<PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
    children:[
     {
       path:'maindashboard',
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
     {
       path:'add-request',
       element:<AddRequest></AddRequest>
+    },
+    {
+      path:'all-users',
+      element: <Allusers></Allusers>
     },
      {
       path:'manage-product',
