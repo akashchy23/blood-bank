@@ -1,14 +1,15 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import axios from 'axios';
-import useAxios from '../../hook/UseAxios';
+// import useAxios from '../../hook/UseAxios';
+import useAxiosSecure from '../../hook/useAxiosSecure';
 
 const AddRequest = () => {
     const [upazilas, setUpazilas] = useState([])
     const [districts, setDistricts] = useState([])
     const { user } = use(AuthContext)
-    const axiosInstance = useAxios()
-
+    // const axiosInstance = useAxios()
+    const axiosSecure = useAxiosSecure()
     useEffect(() => {
         axios.get('/upazila.json')
             .then(res => setUpazilas(res.data.upazilas))
@@ -44,7 +45,7 @@ const AddRequest = () => {
     };
     // console.log(requestData)
     
-     axiosInstance.post('/requests',requestData)
+     axiosSecure.post('/requests',requestData)
        .then(res=>console.log(res.data))
        .catch(err=>console.log(err))
     }
