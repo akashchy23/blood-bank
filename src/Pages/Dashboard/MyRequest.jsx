@@ -21,7 +21,17 @@ const MyRequest = () => {
     const pages = [...Array(numberOfPage).keys()].map(e => e + 1)
     // console.log(myRequests)
     // console.log(totalRequests)
-    console.log(pages)
+    // console.log(pages)
+    const handlePrev=()=>{
+        if(currentpage > 1){
+            setCurrentPage(currentpage - 1)
+        }
+    }
+    const handleNext = ()=>{
+        if(currentpage < pages.length){
+            setCurrentPage(currentpage + 1)
+        }
+    }
     return (
         <div>
             <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -52,11 +62,11 @@ const MyRequest = () => {
                 </table>
             </div>
             <div className='flex justify-center mt-12 gap-4'>
-              <button className="btn">Prev</button>
+              <button onClick={handlePrev} className="btn">Prev</button>
               {
                 pages.map(page=> <button className={`btn ${page == currentpage? 'bg-[#435585] text-white' : ''}`} onClick={()=>setCurrentPage(page)}>{page}</button>)
               }
-              <button className="btn">Next</button>
+              <button onClick={handleNext} className="btn">Next</button>
             </div>
         </div>
     );
