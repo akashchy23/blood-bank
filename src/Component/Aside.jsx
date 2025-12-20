@@ -62,14 +62,14 @@ const Aside = () => {
         }
 
         <NavLink
-          to="/dashboard/manage-product"
+          to="/dashboard/my-request"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-lg transition
             ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
           }
         >
           <Home className="h-5 w-5" />
-          Manage Product
+          My Request
         </NavLink>
 
         <NavLink

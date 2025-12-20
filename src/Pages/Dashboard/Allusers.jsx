@@ -6,13 +6,24 @@ const Allusers = () => {
     const axiosSecure = useAxiosSecure()
     const [users, setUsers] = useState([])
 
-    useEffect(() => {
-
+    const fetchUsers =()=>{
         axiosSecure.get('/users')
             .then(res => setUsers(res.data))
+    }
+
+    useEffect(() => {
+      fetchUsers()
+        
     }, [axiosSecure])
 
-    console.log(users)
+    const handleStatusChange = (email,status)=>{
+         axiosSecure.patch(`/update/user/status?email=${email}&status=${status}`)
+           .then(res=>{
+            console.log(res.data)
+            fetchUsers()
+           })
+    }
+
     return (
         <div className="overflow-x-auto">
             <table className="table">
@@ -60,7 +71,15 @@ const Allusers = () => {
                         </td>
                         <td>{user?.status}</td>
                         <th>
-                            <button className="btn btn-ghost btn-xs">details</button>
+                            {
+                                user?.status == 'active' ?
+                                <button onClick={()=>handleStatusChange(user?.email,'blocked')} className="btn btn-error btn-xs text-white">Blocked</button>
+                                : <button onClick={()=>handleStatusChange(user?.email,'active')} className="btn btn-success btn-xs">Active</button>
+                               
+                                
+                            }
+                            
+                           
                         </th>
                     </tr>
                         )
