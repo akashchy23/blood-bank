@@ -9,6 +9,7 @@ import AddRequest from "../Pages/Dashboard/AddRequest";
 import Allusers from "../Pages/Dashboard/Allusers";
 import PrivateRoutes from "./PrivateRoutes";
 import MyRequest from "../Pages/Dashboard/MyRequest";
+import Donate from "../Pages/Donate";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,12 @@ const router = createBrowserRouter([
       {
         path:'/register',
         Component:Register
+      },
+      {
+        path:'/donate',
+        Component:Donate
+      },{
+        path:'/payment-success'
       }
     ]
   },

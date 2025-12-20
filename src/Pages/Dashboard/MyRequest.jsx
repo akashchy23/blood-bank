@@ -49,7 +49,7 @@ const MyRequest = () => {
                         {
                             myRequests.map((request,index)=>
                                 <tr>
-                            <th>{index+1}</th>
+                            <th>{(currentpage - 1) * itemPerPage + index + 1}</th>
                             <td>{request.recipientName}</td>
                             <td>{request.hospital}</td>
                             <td>{request.bloodGroup}</td>
