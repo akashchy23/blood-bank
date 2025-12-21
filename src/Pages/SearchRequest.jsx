@@ -1,63 +1,170 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import useAxios from '../hook/UseAxios';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import useAxios from "../hook/UseAxios";
 
 const SearchRequest = () => {
-    const [upazilas, setUpazilas] = useState([])
-        const [districts, setDistricts] = useState([])
-        const axiosInstance = useAxios()
-        useEffect(() => {
-            axios.get('./upazila.json')
-                .then(res => setUpazilas(res.data.upazilas))
-    
-            axios.get('./district.json')
-                .then(res => (setDistricts(res.data.districts)))
-        }, [])
+  const axiosInstance = useAxios();
 
-        const handleSearch=(e)=>{
-            e.preventDefault()
-            const bloodGroup = e.target.blood.value;
-            const district = e.target.district.value;
-            const upazila=e.target.upazila.value;
-            
-            axiosInstance.get(`/search-requests?bloodGroup=${bloodGroup}&district=${district}&upazila=${upazila}`)
-            .then(res=>{
-                console.log(res.data)
-            })
-        }
-    return (
-        <div>
-           <form onSubmit={handleSearch} className='fieldset flex'>
-            <select name="blood" defaultValue="Choose Blood Group" className="select">
-                        <option disabled={true}>Choose Blood Group</option>
-                        <option value="A+">A+</option>
-                        <option value="A-">A-</option>
-                        <option value="B+">B+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB+">AB+</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
+  const [results, setResults] = useState([]);
+  const [searched, setSearched] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-                    </select>
-                    {/* for district */}
-                    <select name="district" defaultValue="Select your district" className="select">
-                        <option disabled={true}>Select your district</option>
-                        {
-                            districts.map(d => <option value={d.name} key={ d.id}>{d.name}</option>)
-                        }
-                    </select>
-                    {/* for upazila */}
-                    <select name="upazila" defaultValue="Select your Upazila" className="select">
-                        <option disabled={true}>Select your Upazila</option>
-                        {
-                            upazilas.map(u => <option value={u.name} key={u.id}>{u.name}</option>)
-                        }
-                    </select>
-                    <button className="btn">Search</button>
-           </form>
+  // Load districts & upazilas
+  useEffect(() => {
+    axios.get("/district.json").then((res) => {
+      setDistricts(res.data.districts);
+    });
+
+    axios.get("/upazila.json").then((res) => {
+      setUpazilas(res.data.upazilas);
+    });
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    const bloodGroup = e.target.blood.value;
+    const district = e.target.district.value;
+    const upazila = e.target.upazila.value;
+
+    setLoading(true);
+    setSearched(true);
+
+    axiosInstance
+      .get(
+        `/search-requests?bloodGroup=${bloodGroup}&district=${district}&upazila=${upazila}`
+      )
+      .then((res) => {
+        setResults(res.data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 px-4 py-10">
+      {/* 🔍 Search Section */}
+      <div className="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow">
+        <h2 className="text-2xl font-bold text-center text-red-600 mb-6">
+          Search Blood Donors
+        </h2>
+
+        <form
+          onSubmit={handleSearch}
+          className="grid grid-cols-1 md:grid-cols-4 gap-4"
+        >
+          {/* Blood Group */}
+          <select
+            name="blood"
+            defaultValue=""
+            required
+            className="select select-bordered"
+          >
+            <option value="" disabled>
+              Select Blood Group
+            </option>
+            {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((bg) => (
+              <option key={bg} value={bg}>
+                {bg}
+              </option>
+            ))}
+          </select>
+
+          {/* District */}
+          <select
+            name="district"
+            defaultValue=""
+            required
+            className="select select-bordered"
+          >
+            <option value="" disabled>
+              Select District
+            </option>
+            {districts.map((d) => (
+              <option key={d.id} value={d.name}>
+                {d.name}
+              </option>
+            ))}
+          </select>
+
+          {/* Upazila */}
+          <select
+            name="upazila"
+            defaultValue=""
+            required
+            className="select select-bordered"
+          >
+            <option value="" disabled>
+              Select Upazila
+            </option>
+            {upazilas.map((u) => (
+              <option key={u.id} value={u.name}>
+                {u.name}
+              </option>
+            ))}
+          </select>
+
+          {/* Button */}
+          <button className="btn btn-primary">Search</button>
+        </form>
+      </div>
+
+      {/* 📌 Result Section */}
+      {searched && (
+        <div className="max-w-6xl mx-auto mt-10">
+          {loading && (
+            <p className="text-center text-gray-500">
+              Searching donors...
+            </p>
+          )}
+
+          {!loading && results.length === 0 && (
+            <p className="text-center text-gray-500">
+              No donors found for this search 😔
+            </p>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {results.map((donor) => (
+              <div
+                key={donor._id}
+                className="card bg-white border border-red-100 shadow"
+              >
+                <div className="card-body">
+                  <h3 className="text-xl font-bold text-red-600">
+                    {donor.bloodGroup}
+                  </h3>
+
+                  <p>
+                    <span className="font-semibold">Patient:</span>{" "}
+                    {donor.patientName}
+                  </p>
+
+                  <p>
+                    <span className="font-semibold">Location:</span>{" "}
+                    {donor.upazila}, {donor.district}
+                  </p>
+
+                  <p>
+                    <span className="font-semibold">Date:</span>{" "}
+                    {donor.donationDate}
+                  </p>
+
+                  <div className="card-actions mt-3">
+                    <button className="btn btn-outline btn-error w-full">
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default SearchRequest;
