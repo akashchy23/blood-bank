@@ -1,6 +1,7 @@
 import axios from "axios";
 import { use, useEffect } from "react";
-import { AuthContext } from "../Provider/AuthProvider";
+import { AuthContext } from "../provider/AuthProvider";
+
 
 
 const axiosSecure = axios.create({
