@@ -1,13 +1,14 @@
 import React, { use } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import { Navigate } from 'react-router';
+import Loader from '../Pages/Loader';
 
 const PrivateRoutes = ({children}) => {
     const {user,loading,roleloading,userStatus} = use(AuthContext)
 
 
      if(loading || roleloading){
-        return <p>Loading...</p>
+        return <Loader></Loader>
      }
 
      if(!user || !userStatus=='active'){

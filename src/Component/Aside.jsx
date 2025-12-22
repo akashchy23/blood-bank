@@ -87,16 +87,7 @@ const Aside = () => {
           )
         }
 
-        <NavLink
-          to="/admin/settings"
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-3 rounded-lg transition
-            ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
-          }
-        >
-          <Settings className="h-5 w-5" />
-          Settings
-        </NavLink>
+        
       </nav>
 
       {/* Logout (always bottom, never moves) */}
