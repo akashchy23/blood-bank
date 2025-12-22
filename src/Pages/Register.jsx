@@ -68,7 +68,7 @@ const Register = () => {
                     })
                         .then(() => {
                             setUser(userCredential.user);
-                            axios.post("http://localhost:3000/users", formData)
+                            axios.post("https://missionscic11.vercel.app/users", formData)
                                 .then(res => {
                                     console.log(res.data)
                                 })
