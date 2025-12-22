@@ -96,7 +96,7 @@ const Register = () => {
         <div className="min-h-screen flex items-center justify-center p-6 bg-gray-100 dark:bg-gray-900 transition-all">
             <div className="rounded-2xl shadow-2xl p-8 w-[420px] border bg-white dark:bg-gray-800 dark:border-gray-700 transition-all">
                 <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent mb-6">
-                    Create Your  Account
+                    Create Your  Blood Bank Account
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -134,7 +134,7 @@ const Register = () => {
                             className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
                         />
                     </div>
-                    <label className="font-medium text-gray-800 dark:text-gray-200">Choose Role</label>
+                    <label className="font-medium text-gray-800 dark:text-gray-200">Choose your type Of Blood</label>
                     <select name="blood" defaultValue="Choose Blood Group" className="select">
                         <option disabled={true}>Choose Blood Group</option>
                         <option value="A+">A+</option>
@@ -148,6 +148,7 @@ const Register = () => {
 
                     </select>
                     {/* for district */}
+                      <label className="font-medium text-gray-800 dark:text-gray-200">Choose your District</label>
                     <select name="district" defaultValue="Select your district" className="select">
                         <option disabled={true}>Select your district</option>
                         {
@@ -155,6 +156,7 @@ const Register = () => {
                         }
                     </select>
                     {/* for upazila */}
+                      <label className="font-medium text-gray-800 dark:text-gray-200">Choose your Upazila</label>
                     <select name="upazila" defaultValue="Select your Upazila" className="select">
                         <option disabled={true}>Select your Upazila</option>
                         {

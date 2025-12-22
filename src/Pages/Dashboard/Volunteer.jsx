@@ -52,7 +52,7 @@ const Volunteer = () => {
         <div className="min-h-screen flex items-center justify-center p-6 bg-gray-100 dark:bg-gray-900 transition-all">
             <div className="rounded-2xl shadow-2xl p-8 w-[420px] border bg-white dark:bg-gray-800 dark:border-gray-700 transition-all">
                 <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent mb-6">
-                    Create Your  Account
+                    Add As Volunteer
                 </h2>
 
                 <form onSubmit={handleAddvolunteer} className="space-y-4">

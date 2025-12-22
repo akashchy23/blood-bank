@@ -55,7 +55,7 @@ const Aside = () => {
             ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
           }
         >
-          <Home className="h-5 w-5" />
+           <Users className="h-5 w-5" />
           All Users
         </NavLink>
           )
