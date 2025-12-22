@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
-
 import { AuthContext } from "../provider/AuthProvider";
 import { Link, NavLink } from "react-router";
 
-
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const navLinkStyle = ({ isActive }) =>
+    isActive
+      ? "text-red-600 font-semibold"
+      : "text-gray-700 hover:text-red-500";
 
   const handleLogout = () => {
     logout()
@@ -13,18 +15,13 @@ const Navbar = () => {
       .catch((err) => console.error(err));
   };
 
-  const navLinkStyle = ({ isActive }) =>
-    isActive
-      ? "text-red-600 font-semibold"
-      : "text-gray-700 hover:text-red-500";
-
   return (
     <nav className="navbar bg-base-100 shadow-lg px-4 md:px-10 sticky top-0 z-50">
       {/* LEFT */}
       <div className="navbar-start">
         {/* Mobile Menu */}
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+        <div className="dropdown lg:hidden">
+          <label tabIndex={0} className="btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -45,14 +42,26 @@ const Navbar = () => {
             tabIndex={0}
             className="menu dropdown-content mt-3 p-3 shadow bg-base-100 rounded-box w-56"
           >
-            <li><NavLink to="/all-requests">All Requests</NavLink></li>
-            <li><NavLink to="/search">Search</NavLink></li>
-           {
-            user && (<li><NavLink to="/donate" className={navLinkStyle}>Donate</NavLink></li>)
-          }
+            <li>
+              <NavLink to="/all-requests" className={navLinkStyle}>
+                All Requests
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/search" className={navLinkStyle}>
+                Search
+              </NavLink>
+            </li>
             {user && (
               <li>
-                <NavLink to="/dashboard/maindashboard">
+                <NavLink to="/donate" className={navLinkStyle}>
+                  Donate
+                </NavLink>
+              </li>
+            )}
+            {user && (
+              <li>
+                <NavLink to="/dashboard/maindashboard" className={navLinkStyle}>
                   Dashboard
                 </NavLink>
               </li>
@@ -61,55 +70,58 @@ const Navbar = () => {
         </div>
 
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl font-extrabold tracking-wide"
-        >
+        <Link to="/" className="text-2xl font-extrabold tracking-wide">
           Mes<span className="text-red-600">Blood</span>Bank
         </Link>
       </div>
 
-    
+      {/* CENTER (Desktop Menu) */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal gap-6 text-base">
-          <li><NavLink to="/all-requests" className={navLinkStyle}>All Requests</NavLink></li>
-          <li><NavLink to="/search" className={navLinkStyle}>Search</NavLink></li>
-          {
-            user && (<li><NavLink to="/donate" className={navLinkStyle}>Donate</NavLink></li>)
-          }
+          <li>
+            <NavLink to="/all-requests" className={navLinkStyle}>
+              All Requests
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/search" className={navLinkStyle}>
+              Search
+            </NavLink>
+          </li>
+          {user && (
+            <li>
+              <NavLink to="/donate" className={navLinkStyle}>
+                Donate
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
 
       {/* RIGHT */}
       <div className="navbar-end flex items-center gap-3">
-        
+        {/* Dashboard button only visible on desktop */}
         {user && (
           <NavLink
             to="/dashboard/maindashboard"
-            className="btn btn-outline btn-error btn-sm"
+            className="btn btn-outline btn-error btn-sm hidden lg:inline-flex"
           >
             Dashboard
           </NavLink>
         )}
 
-        
+        {/* User Avatar */}
         {user && (
           <div className="avatar">
             <div className="w-9 rounded-full ring ring-red-500 ring-offset-base-100 ring-offset-2">
-              <img
-                src={user?.photoURL}
-                alt="user"
-              />
+              <img src={user?.photoURL} alt="user" />
             </div>
           </div>
         )}
 
-       
+        {/* Login / Logout */}
         {user ? (
-          <button
-            onClick={handleLogout}
-            className="btn btn-primary btn-sm"
-          >
+          <button onClick={handleLogout} className="btn btn-primary btn-sm">
             Logout
           </button>
         ) : (

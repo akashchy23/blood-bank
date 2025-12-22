@@ -3,6 +3,7 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import axios from 'axios';
 // import useAxios from '../../hook/UseAxios';
 import useAxiosSecure from '../../hook/useAxiosSecure';
+import { toast } from 'react-toastify';
 
 const AddRequest = () => {
     const [upazilas, setUpazilas] = useState([])
@@ -12,7 +13,9 @@ const AddRequest = () => {
     const axiosSecure = useAxiosSecure()
     useEffect(() => {
         axios.get('/upazila.json')
-            .then(res => setUpazilas(res.data.upazilas))
+            .then(res =>{
+                 setUpazilas(res.data.upazilas)
+            })
 
         axios.get('/district.json')
             .then(res => (setDistricts(res.data.districts)))
@@ -46,8 +49,12 @@ const AddRequest = () => {
     // console.log(requestData)
     
      axiosSecure.post('/requests',requestData)
-       .then(res=>console.log(res.data))
+       .then(res=>{
+        console.log(res.data)
+         toast.success("Add Request successfully!")
+       })
        .catch(err=>console.log(err))
+
     }
     return (
           <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../hook/UseAxios";
+import Loader from "../Loader";
 
 
 const Volunteers = () => {
@@ -14,10 +15,10 @@ const Volunteers = () => {
         setVolunteers(res.data);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [axiosInstance]);
 
   if (loading) {
-    return <p className="text-center mt-10">Loading volunteers...</p>;
+    return <Loader></Loader>;
   }
 
   return (

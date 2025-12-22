@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import useAxios from '../../hook/UseAxios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 const Volunteer = () => {
     const [upazilas, setUpazilas] = useState([])
     const [districts, setDistricts] = useState([])
     const axiosInstance = useAxios()
+    const navigate = useNavigate()
     useEffect(() => {
         axios.get('/upazila.json')
             .then(res => setUpazilas(res.data.upazilas))
@@ -46,6 +49,8 @@ const Volunteer = () => {
         axiosInstance.post('/add-volunteers',formData)
           .then(res=>{
             console.log(res.data)
+            toast.success("Volunteer Added successfully!")
+            navigate('/volunteers')
           })
     }
     return (
