@@ -67,7 +67,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* CENTER (Desktop) */}
+    
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal gap-6 text-base">
           <li><NavLink to="/all-requests" className={navLinkStyle}>All Requests</NavLink></li>
@@ -78,7 +78,7 @@ const Navbar = () => {
 
       {/* RIGHT */}
       <div className="navbar-end flex items-center gap-3">
-        {/* Dashboard button – FIXED (always visible when logged in) */}
+        
         {user && (
           <NavLink
             to="/dashboard/maindashboard"
@@ -88,7 +88,7 @@ const Navbar = () => {
           </NavLink>
         )}
 
-        {/* User avatar */}
+        
         {user && (
           <div className="avatar">
             <div className="w-9 rounded-full ring ring-red-500 ring-offset-base-100 ring-offset-2">
@@ -100,7 +100,7 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Auth Button */}
+       
         {user ? (
           <button
             onClick={handleLogout}
