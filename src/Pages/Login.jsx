@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { auth } from "../firebase/firebase.config";
 
 const Login = () => {
-  const { setUser, handleGoogleSignIn } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,17 +31,7 @@ const Login = () => {
       });
   };
 
-  const googleSignIn = () => {
-    handleGoogleSignIn()
-      .then((result) => {
-        setUser(result.user);
-        toast.success("Logged in successfully!");
-        navigate("/");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  };
+  
 
   const handleForget = () => {
     navigate(`/forget/${email}`);
@@ -99,15 +89,7 @@ const Login = () => {
             Login
           </button>
 
-          {/* Google Login */}
-          <button
-            type="button"
-            onClick={googleSignIn}
-            className="w-full flex items-center justify-center gap-3 px-6 py-3 mt-2 font-semibold text-gray-800 dark:text-gray-200 rounded-lg border dark:border-gray-600 shadow-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300"
-          >
-            <FcGoogle size={22} />
-            Continue with Google
-          </button>
+          
 
           {/* Register Redirect */}
           <div className="text-center mt-3 text-gray-700 dark:text-gray-300">

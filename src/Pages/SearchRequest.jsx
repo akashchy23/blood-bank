@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import useAxios from "../hook/UseAxios";
 
 const SearchRequest = () => {
   const axiosInstance = useAxios();
+  const navigate = useNavigate();
 
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
@@ -11,14 +13,13 @@ const SearchRequest = () => {
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Load districts & upazilas
   useEffect(() => {
     axios.get("/district.json").then((res) => {
-      setDistricts(res.data.districts);
+      setDistricts(res.data.districts || []);
     });
 
     axios.get("/upazila.json").then((res) => {
-      setUpazilas(res.data.upazilas);
+      setUpazilas(res.data.upazilas || []);
     });
   }, []);
 
@@ -36,26 +37,34 @@ const SearchRequest = () => {
       .get(
         `/search-requests?bloodGroup=${bloodGroup}&district=${district}&upazila=${upazila}`
       )
-      .then((res) => {
-        setResults(res.data);
-      })
+      .then((res) => setResults(res.data || []))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   };
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
-      {/* 🔍 Search Section */}
-      <div className="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow">
-        <h2 className="text-2xl font-bold text-center text-red-600 mb-6">
+      {/* 🔴 Header */}
+      <div className="max-w-6xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <h2 className="text-3xl font-bold text-red-600">
           Search Blood Donors
         </h2>
 
+        <button
+          onClick={() => navigate("/volunteers")}
+          className="btn btn-outline btn-error"
+        >
+          View Volunteers
+        </button>
+      </div>
+
+      {/* 🔍 Search Box */}
+      <div className="max-w-6xl mx-auto bg-white p-6 rounded-xl shadow">
         <form
           onSubmit={handleSearch}
           className="grid grid-cols-1 md:grid-cols-4 gap-4"
         >
-          {/* Blood Group */}
+          {/* Blood */}
           <select
             name="blood"
             defaultValue=""
@@ -107,11 +116,16 @@ const SearchRequest = () => {
           </select>
 
           {/* Button */}
-          <button className="btn btn-primary">Search</button>
+          <button
+            className="btn btn-error"
+            disabled={loading}
+          >
+            {loading ? "Searching..." : "Search"}
+          </button>
         </form>
       </div>
 
-      {/* 📌 Result Section */}
+      {/* 📌 Results */}
       {searched && (
         <div className="max-w-6xl mx-auto mt-10">
           {loading && (
@@ -130,7 +144,7 @@ const SearchRequest = () => {
             {results.map((donor) => (
               <div
                 key={donor._id}
-                className="card bg-white border border-red-100 shadow"
+                className="card bg-white border border-red-100 shadow hover:shadow-lg transition"
               >
                 <div className="card-body">
                   <h3 className="text-xl font-bold text-red-600">
@@ -152,11 +166,9 @@ const SearchRequest = () => {
                     {donor.donationDate}
                   </p>
 
-                  <div className="card-actions mt-3">
-                    <button className="btn btn-outline btn-error w-full">
-                      View Details
-                    </button>
-                  </div>
+                  <button className="btn btn-outline btn-error mt-3 w-full">
+                    View Details
+                  </button>
                 </div>
               </div>
             ))}

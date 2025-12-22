@@ -76,7 +76,7 @@ const Footer = () => {
       </div>
 
       <div className="mt-10 text-center text-gray-300 text-sm">
-        &copy; {new Date().getFullYear()} Blood Bank. All rights reserved.
+        &copy; {new Date().getFullYear()} Blood Bank. Made By Akash Zain.
       </div>
     </footer>
   );

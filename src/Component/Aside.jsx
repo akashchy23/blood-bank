@@ -72,16 +72,20 @@ const Aside = () => {
           My Request
         </NavLink>
 
-        <NavLink
-          to="/admin/users"
+        {
+          role == 'admin' && (
+            <NavLink
+          to="add-volunteers"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-lg transition
             ${isActive ? "bg-blue-600 text-white" : "hover:bg-slate-700"}`
           }
         >
           <Users className="h-5 w-5" />
-          Users
+          Add Volunteers
         </NavLink>
+          )
+        }
 
         <NavLink
           to="/admin/settings"

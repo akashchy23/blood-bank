@@ -72,7 +72,9 @@ const Navbar = () => {
         <ul className="menu menu-horizontal gap-6 text-base">
           <li><NavLink to="/all-requests" className={navLinkStyle}>All Requests</NavLink></li>
           <li><NavLink to="/search" className={navLinkStyle}>Search</NavLink></li>
-          <li><NavLink to="/donate" className={navLinkStyle}>Donate</NavLink></li>
+          {
+            user && (<li><NavLink to="/donate" className={navLinkStyle}>Donate</NavLink></li>)
+          }
         </ul>
       </div>
 
@@ -93,7 +95,7 @@ const Navbar = () => {
           <div className="avatar">
             <div className="w-9 rounded-full ring ring-red-500 ring-offset-base-100 ring-offset-2">
               <img
-                src={user.photoURL || "https://i.ibb.co/2kRz1Xy/user.png"}
+                src={user?.photoURL}
                 alt="user"
               />
             </div>

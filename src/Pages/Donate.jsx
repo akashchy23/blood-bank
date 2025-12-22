@@ -70,11 +70,11 @@ const Donate = () => {
             <div className="bg-gray-50 p-3 rounded-lg text-sm">
               <p>
                 <span className="font-semibold">Donor:</span>{" "}
-                {user?.displayName || "Anonymous"}
+                {user?.displayName}
               </p>
               <p>
                 <span className="font-semibold">Email:</span>{" "}
-                {user?.email || "Not available"}
+                {user?.email }
               </p>
             </div>
 

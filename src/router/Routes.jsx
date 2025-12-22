@@ -14,6 +14,11 @@ import PaymentSuccess from "../Pages/PaymentSuccess";
 import PaymentCancel from "../Pages/PaymentCancel";
 import Donate from "../Pages/Donate";
 import SearchRequest from "../Pages/SearchRequest";
+import AllRequest from "../Pages/AllRequest";
+import RequestDetails from "../Pages/RequestDetails";
+import Volunteer from "../Pages/Dashboard/Volunteer";
+import Volunteers from "../Pages/Dashboard/Volunteers ";
+
 
 const router = createBrowserRouter([
   {
@@ -47,6 +52,18 @@ const router = createBrowserRouter([
       {
         path:'/search',
         Component:SearchRequest
+      },
+      {
+        path:'/all-requests',
+        Component:AllRequest
+      },
+      {
+        path:'/request/:id',
+        element:<PrivateRoutes><RequestDetails></RequestDetails></PrivateRoutes>
+      },
+      {
+        path:'/volunteers',
+        element:<Volunteers></Volunteers>
       }
     ]
   },
@@ -69,6 +86,10 @@ const router = createBrowserRouter([
      {
       path:'my-request',
       element:<MyRequest></MyRequest>
+    },
+     {
+      path:'add-volunteers',
+      element:<Volunteer></Volunteer>
     }
    ]
   }
