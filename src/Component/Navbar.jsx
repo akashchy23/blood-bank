@@ -47,7 +47,9 @@ const Navbar = () => {
           >
             <li><NavLink to="/all-requests">All Requests</NavLink></li>
             <li><NavLink to="/search">Search</NavLink></li>
-            <li><NavLink to="/donate">Donate</NavLink></li>
+           {
+            user && (<li><NavLink to="/donate" className={navLinkStyle}>Donate</NavLink></li>)
+          }
             {user && (
               <li>
                 <NavLink to="/dashboard/maindashboard">
