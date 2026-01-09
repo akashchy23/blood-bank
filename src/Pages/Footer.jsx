@@ -1,12 +1,18 @@
 import React from "react";
 import { Phone, Mail, MapPin, Facebook, Twitter, Instagram } from "lucide-react";
-import { NavLink } from "react-router";
-
 
 const Footer = () => {
+
+  // Smooth scroll function
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contact");
+    contactSection?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <footer className="bg-red-600 text-white py-12 px-4">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+
         {/* About */}
         <div>
           <h3 className="text-xl font-bold mb-4">About Blood Bank</h3>
@@ -20,24 +26,29 @@ const Footer = () => {
           <h3 className="text-xl font-bold mb-4">Useful Links</h3>
           <ul className="space-y-2">
             <li>
-              <NavLink to="/" className="hover:underline">
+              <a href="/" className="hover:underline">
                 Home
-              </NavLink>
+              </a>
             </li>
             <li>
-              <NavLink to="/search-request" className="hover:underline">
+              <a href="/search" className="hover:underline">
                 Search Donors
-              </NavLink>
+              </a>
             </li>
             <li>
-              <NavLink to="/register" className="hover:underline">
+              <a href="/register" className="hover:underline">
                 Join as Donor
-              </NavLink>
+              </a>
             </li>
+            
             <li>
-              <NavLink to="/contact-us" className="hover:underline">
+              {/* Scroll to Contact */}
+              <button
+                onClick={scrollToContact}
+                className="hover:underline focus:outline-none"
+              >
                 Contact
-              </NavLink>
+              </button>
             </li>
           </ul>
         </div>
@@ -53,7 +64,7 @@ const Footer = () => {
               <Mail className="w-4 h-4" /> support@bloodbank.com
             </li>
             <li className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" /> 123 Red Street, Dhaka, Bangladesh
+              <MapPin className="w-4 h-4" /> Dhaka, Bangladesh
             </li>
           </ul>
         </div>
@@ -62,17 +73,12 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold mb-4">Follow Us</h3>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-gray-200">
-              <Facebook className="w-6 h-6" />
-            </a>
-            <a href="#" className="hover:text-gray-200">
-              <Twitter className="w-6 h-6" />
-            </a>
-            <a href="#" className="hover:text-gray-200">
-              <Instagram className="w-6 h-6" />
-            </a>
+            <Facebook className="w-6 h-6 cursor-pointer" />
+            <Twitter className="w-6 h-6 cursor-pointer" />
+            <Instagram className="w-6 h-6 cursor-pointer" />
           </div>
         </div>
+
       </div>
 
       <div className="mt-10 text-center text-gray-300 text-sm">
